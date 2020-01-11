@@ -12,6 +12,7 @@
         "functional": "cpp",
         "tuple": "cpp",
         "utility": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "algorithm": "cpp"
     }
 }
