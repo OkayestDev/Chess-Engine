@@ -7,7 +7,19 @@
       "label": "Build C++",
       "type": "shell",
       "command": "g++",
-      "args": ["-g", "main.cpp"],
+      "args": [
+        "-g",
+        "-o",
+        "out",
+        "-I",
+        ".",
+        "-I",
+        "./src",
+        "-I",
+        "./include",
+        "*.cpp",
+        "src/*.cpp"
+      ],
       "group": "build",
       "problemMatcher": []
     }

@@ -1,90 +1,63 @@
 #include "../include/board.h"
+#include <iostream>
+#include "../include/piece.h"
+#include "../include/square.h"
 
-namespace Chess
-{
-Square::Square(Piece p, Color c)
-{
-    piece = p;
-    pieceColor = c;
+namespace Chess {
+Board::Board() {}
+
+void Board::placePawns() {
+  int xWhitePawnStart = pawnWhiteStart.first;
+  int xBlackPawnStart = pawnBlackStart.second;
+  for (int i = 0; i < columns; i++) {
+    board[xWhitePawnStart][i] = Square(Piece::PAWN, Color::WHITE);
+    board[xBlackPawnStart][i] = Square(Piece::PAWN, Color::BLACK);
+  }
 }
 
-Square::Square()
-{
-    piece = Piece::outOfBounds;
-    pieceColor = Color::none;
+void Board::placeBlackPowerPieces() {
+  // Queens
+  board[queenBlack.first][queenBlack.second] =
+      Square(Piece::QUEEN, Color::BLACK);
+  board[kingBlack.first][kingBlack.second] = Square(Piece::KING, Color::BLACK);
+  board[bishop1Black.first][bishop1Black.second] =
+      Square(Piece::BISHOP, Color::BLACK);
+  board[bishop2Black.first][bishop2Black.second] =
+      Square(Piece::BISHOP, Color::BLACK);
+  board[knight1Black.first][knight1Black.second] =
+      Square(Piece::KNIGHT, Color::BLACK);
+  board[knight2Black.first][knight2Black.second] =
+      Square(Piece::KNIGHT, Color::BLACK);
+  board[rook1Black.first][rook1Black.second] =
+      Square(Piece::ROOK, Color::BLACK);
+  board[rook2Black.first][rook2Black.second] =
+      Square(Piece::ROOK, Color::BLACK);
 }
 
-void Board::setSquare(const size_t position, Square s)
-{
-    if (position >= boardSize)
-    {
-        return;
-    }
-    squares[position] = s;
+void Board::placeWhitePowerPieces() {
+  // Queens
+  board[queenWhite.first][queenWhite.second] =
+      Square(Piece::QUEEN, Color::WHITE);
+  board[kingWhite.first][kingWhite.second] = Square(Piece::KING, Color::WHITE);
+  board[bishop1White.first][bishop1White.second] =
+      Square(Piece::BISHOP, Color::WHITE);
+  board[bishop2White.first][bishop2White.second] =
+      Square(Piece::BISHOP, Color::WHITE);
+  board[knight1White.first][knight1White.second] =
+      Square(Piece::KNIGHT, Color::WHITE);
+  board[knight2White.first][knight2White.second] =
+      Square(Piece::KNIGHT, Color::WHITE);
+  board[rook1White.first][rook1White.second] =
+      Square(Piece::ROOK, Color::WHITE);
+  board[rook2White.first][rook2White.second] =
+      Square(Piece::ROOK, Color::WHITE);
 }
 
-Square Board::getSquare(const size_t position) const
-{
-    if (position >= boardSize)
-    {
-        return Square(Piece::outOfBounds, Color::none);
-    }
-    return squares[position];
-}
+Square Board::getSquare(int x, int y) { return board[x][y]; }
 
-void placePawns(Board &board)
-{
-    for (size_t i = 0; i < 8; ++i)
-    {
-        board.setSquare(pawnBlackStart + i, Square(Piece::pawn, Color::black));
-        board.setSquare(pawnWhiteStart + i, Square(Piece::pawn, Color::white));
-    }
+void Board::constructInitialBoard() {
+  placePawns();
+  placeBlackPowerPieces();
+  placeWhitePowerPieces();
 }
-
-/**
-     * Place the rest but with s/kings/queens
-     * @todo refactor magic number
-     */
-void placePowerPieces(Board &board)
-{
-    int w = 0;
-    for (auto p : {Piece::rookCastle, Piece::knight, Piece::bishop, Piece::queen})
-    {
-        board.setSquare(21 + w, Square(p, Color::black));
-        board.setSquare(Col8Row1 - w, Square(p, Color::black));
-        board.setSquare(Col1Row8 + w, Square(p, Color::white));
-        board.setSquare(Col8Row8 - w, Square(p, Color::white));
-        ++w;
-    }
-}
-
-void placeKings(Board &board)
-{
-    board.setSquare(kingBlackPosition, Square(Piece::kingCastle, Color::black));
-    board.setSquare(kingWhitePosition, Square(Piece::kingCastle, Color::white));
-}
-
-/**
-     * Populates the empty spaces between pieces
-     */
-void emptySquares(Board &board)
-{
-    for (int x = 0; x < 8; ++x)
-    {
-        for (int y = 0; y < 4; ++y)
-        {
-            board.setSquare(
-                41 + x + y * 10,
-                Square(Piece::none, Color::none));
-        }
-    }
-}
-
-void initClassicBoard(Board &board)
-{
-    placePawns(board);
-    placePowerPieces(board);
-    placeKings(board);
-    emptySquares(board);
-}
-} // namespace Chess
+}  // namespace Chess

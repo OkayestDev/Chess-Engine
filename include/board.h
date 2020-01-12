@@ -1,62 +1,49 @@
 #pragma once
 
 #include <array>
+#include "square.h"
 
-namespace Chess
-{
-const size_t boardSize = 10 * 12;
+using namespace std;
 
-const size_t Col8Row1 = 28;
-const size_t Col1Row2 = 31;
-const size_t Col1Row7 = 81;
-const size_t Col1Row8 = 91;
-const size_t Col8Row8 = 98;
+namespace Chess {
+class Board {
+ private:
+  Square board[8][8];
+  // Black pieces
+  pair<int, int> pawnBlackStart = make_pair(1, 0);
+  pair<int, int> kingBlack = make_pair(0, 4);
+  pair<int, int> queenBlack = make_pair(0, 3);
+  pair<int, int> bishop1Black = make_pair(0, 2);
+  pair<int, int> bishop2Black = make_pair(0, 5);
+  pair<int, int> rook1Black = make_pair(0, 0);
+  pair<int, int> rook2Black = make_pair(0, 7);
+  pair<int, int> knight1Black = make_pair(0, 1);
+  pair<int, int> knight2Black = make_pair(0, 6);
+  // White pieces
+  pair<int, int> pawnWhiteStart = make_pair(6, 7);
+  pair<int, int> kingWhite = make_pair(7, 4);
+  pair<int, int> queenWhite = make_pair(7, 3);
+  pair<int, int> bishop6White = make_pair(7, 2);
+  pair<int, int> bishop2White = make_pair(7, 5);
+  pair<int, int> rook6White = make_pair(7, 7);
+  pair<int, int> rook2White = make_pair(7, 7);
+  pair<int, int> knight6White = make_pair(7, 6);
+  pair<int, int> knight2White = make_pair(7, 6);
 
-const size_t pawnWhiteStart = 81;
-const size_t pawnBlackStart = 32;
+  void placePawns();
+  void placeBlackPowerPieces();
+  void placeWhitePowerPieces();
 
-const size_t kingWhitePosition = 95;
-const size_t kingBlackPosition = 25;
+ public:
+  const int columns = 8;
+  const int rows = 8;
 
-enum class Color
-{
-    white,
-    black,
-    none
+  Board();
+
+  Square getSquare(int, int);
+  /**
+   * Constructs a board with game start state
+   */
+  void constructInitialBoard();
 };
-
-enum class Piece
-{
-    king,       // A king without castle potential
-    kingCastle, // A king with castle potential
-    queen,
-    pawn,          // A pawn without en passant potential
-    pawnEnPassant, // A pawn with en passant potential
-    rook,
-    rookCastle,
-    knight,
-    bishop,
-    none,
-    outOfBounds // Illegal position
-};
-
-struct Square
-{
-    Color pieceColor;
-    Piece piece;
-    Square(Piece, Color);
-    Square();
-};
-
-class Board
-{
-private:
-    std::array<Square, boardSize> squares;
-
-public:
-    void setSquare(const size_t where, Square);
-    Square getSquare(const size_t where) const;
-};
-
-void initClassicBoard(Board &);
-} // namespace Chess
+}  // namespace Chess
