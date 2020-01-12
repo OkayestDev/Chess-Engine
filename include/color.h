@@ -1,5 +1,11 @@
 #pragma once
 
-namespace Chess {
-enum class Color { WHITE, BLACK, NONE };
+namespace Chess
+{
+enum class Color
+{
+    WHITE,
+    BLACK,
+    NONE
+};
 }

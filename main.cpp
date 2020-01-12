@@ -1,11 +1,13 @@
-#include <iostream>
 #include "./include/board.h"
+#include "./include/gui.h"
+#include <iostream>
 
 using namespace Chess;
 
-int main() {
-  Board board = Board();
-  board.constructInitialBoard();
+int main()
+{
+    Board board = Board();
+    board.constructInitialBoard();
 
-  Square square = board.getSquare(0, 0);
+    printBoard(board);
 }
