@@ -4,12 +4,12 @@
 
 namespace Chess
 {
-Move::Move(int _fromX, int _toX, int _fromY, int _toY)
+Move::Move(int _fromColumn, int _toColumn, int _fromRow, int _toRow)
 {
-    fromX = _fromX;
-    fromY = _fromY;
-    toX = _toX;
-    toY = _toY;
+    fromColumn = _fromColumn;
+    fromRow = _fromRow;
+    toColumn = _toColumn;
+    toRow = _toRow;
 }
 
 Move::Move() {}
@@ -27,6 +27,5 @@ void undoMove(Board &board, BoardHistory &boardHistory)
 void doMove(Move m, Board &board, BoardHistory &boardHistory,
             Piece pawnPromotion)
 {
-    
 }
 } // namespace Chess

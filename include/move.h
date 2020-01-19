@@ -13,10 +13,10 @@ namespace Chess
 
 struct Move
 {
-    int fromX;
-    int fromY;
-    int toX;
-    int toY;
+    int fromColumn;
+    int fromRow;
+    int toColumn;
+    int toRow;
     Move(int, int, int, int);
     Move();
 };
